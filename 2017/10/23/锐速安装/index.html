@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="欢迎来到召唤师峡谷">
 <meta property="og:description" content="大家好,我来介绍我的….(手动滑稽)锐速（仅支持KVM,Xen,vmare架构）由于锐速对内核要求严格，所以要先更换内核">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-26T06:01:15.060Z">
+<meta property="og:updated_time" content="2017-10-26T06:02:09.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="锐速安装">
 <meta name="twitter:description" content="大家好,我来介绍我的….(手动滑稽)锐速（仅支持KVM,Xen,vmare架构）由于锐速对内核要求严格，所以要先更换内核">
@@ -353,7 +353,7 @@
       
         <h3 id="大家好-我来介绍我的…-手动滑稽"><a href="#大家好-我来介绍我的…-手动滑稽" class="headerlink" title="大家好,我来介绍我的….(手动滑稽)"></a>大家好,我来介绍我的….(手动滑稽)</h3><p>锐速（仅支持KVM,Xen,vmare架构）<br>由于锐速对内核要求严格，所以要先更换内核<br><a id="more"></a><br>1）Centos6 ×64（逐步运行）:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">rpm -ivh http://wget.ca/Kernel/kernel-firmware-2.6.32-504.3.3.el6.noarch.rpm</div><div class="line">rpm -ivh http://wget.ca/Kernel/kernel-2.6.32-504.3.3.el6.x86_64.rpm --force</div><div class="line">reboot</div><div class="line">uname -r（如出现2.6.32-504.3.3.el6即证明更换内核成功）</div></pre></td></tr></table></figure></p>
 <p>2）Centos7 ×64（逐步运行）:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">rpm -ivh http://wget.ca/Kernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force</div><div class="line">reboot</div><div class="line">uname -r（如出现3.10.0-229.1.2.el7.x86_64即证明更换内核成功）</div></pre></td></tr></table></figure></p>
-<h3 id="备用更换内核脚本"><a href="#备用更换内核脚本" class="headerlink" title="备用更换内核脚本"></a>备用更换内核脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://blog.asuhu.com/sh/ruisu.sh</div><div class="line">bash ruisu.sh</div><div class="line">等重启</div></pre></td></tr></table></figure>
+<h3 id="备用更换内核脚本"><a href="#备用更换内核脚本" class="headerlink" title="备用更换内核脚本"></a>备用更换内核脚本</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://blog.asuhu.com/sh/ruisu.sh</div><div class="line">bash ruisu.sh</div><div class="line"><span class="comment">##等重启</span></div></pre></td></tr></table></figure>
 <p>再安装锐速<br>（centos6 64位）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://wget.ca/Sh/Serverspeeder/rscentos&amp;&amp;sh rscentos</div></pre></td></tr></table></figure></p>
 <p>（centos7 64位）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://wget.ca/Sh/Serverspeeder/rscentos7&amp;&amp;sh rscentos7</div></pre></td></tr></table></figure></p>
 <p>#锐速常用命令<br>启动：/serverspeeder/bin/serverSpeeder.sh start<br>停止：/serverspeeder/bin/serverSpeeder.sh stop<br>状态：service serverSpeeder status</p>
