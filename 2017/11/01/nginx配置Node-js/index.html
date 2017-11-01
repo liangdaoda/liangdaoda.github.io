@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nginx,vps,node," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在nginx下配置Node.js(Nginx站点与NodeJS站点共存的配置)(为Node.js程序配置使用Nginx服务器的简明教程)丑话说在前头,这个配置真的是坑,折腾了我两个小时 向上nginx.conf的配置文件">
+<meta name="keywords" content="nginx,vps,node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx配置Node.js">
+<meta property="og:url" content="http://yoursite.com/2017/11/01/nginx配置Node-js/index.html">
+<meta property="og:site_name" content="欢迎来到召唤师峡谷">
+<meta property="og:description" content="在nginx下配置Node.js(Nginx站点与NodeJS站点共存的配置)(为Node.js程序配置使用Nginx服务器的简明教程)丑话说在前头,这个配置真的是坑,折腾了我两个小时 向上nginx.conf的配置文件">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/b8da6e8e832bda9a6d32defac9b012a8/xmlnote/862777EB540A48C4926C07D2E820F2C3/1031">
+<meta property="og:updated_time" content="2017-11-01T10:02:34.583Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx配置Node.js">
+<meta name="twitter:description" content="在nginx下配置Node.js(Nginx站点与NodeJS站点共存的配置)(为Node.js程序配置使用Nginx服务器的简明教程)丑话说在前头,这个配置真的是坑,折腾了我两个小时 向上nginx.conf的配置文件">
+<meta name="twitter:image" content="http://note.youdao.com/yws/public/resource/b8da6e8e832bda9a6d32defac9b012a8/xmlnote/862777EB540A48C4926C07D2E820F2C3/1031">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/01/nginx配置Node-js/"/>
+
+
+
+
+
+  <title>nginx配置Node.js | 欢迎来到召唤师峡谷</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8b823b88898d925966042391d4ea8147";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">欢迎来到召唤师峡谷</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">向左,向右,向前走</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/01/nginx配置Node-js/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="去pi饺子">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到召唤师峡谷">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">nginx配置Node.js</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T17:38:54+08:00">
+                2017-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/01/nginx配置Node-js/" class="leancloud_visitors" data-flag-title="nginx配置Node.js">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="在nginx下配置Node-js-Nginx站点与NodeJS站点共存的配置-为Node-js程序配置使用Nginx服务器的简明教程"><a href="#在nginx下配置Node-js-Nginx站点与NodeJS站点共存的配置-为Node-js程序配置使用Nginx服务器的简明教程" class="headerlink" title="在nginx下配置Node.js(Nginx站点与NodeJS站点共存的配置)(为Node.js程序配置使用Nginx服务器的简明教程)"></a>在nginx下配置Node.js(Nginx站点与NodeJS站点共存的配置)(为Node.js程序配置使用Nginx服务器的简明教程)</h4><p>丑话说在前头,这个配置真的是坑,折腾了我两个小时</p>
+<p>向上nginx.conf的配置文件<br><a id="more"></a><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">user  www www;</div><div class="line">worker_processes <span class="keyword">auto</span>;</div><div class="line">error_log  /www/wwwlogs/nginx_error.<span class="built_in">log</span>  crit;</div><div class="line">pid        /www/server/nginx/logs/nginx.pid;</div><div class="line">worker_rlimit_nofile <span class="number">51200</span>;</div><div class="line"></div><div class="line">events</div><div class="line">    &#123;</div><div class="line">        use epoll;</div><div class="line">        worker_connections <span class="number">51200</span>;</div><div class="line">        multi_accept on;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">http</div><div class="line">    &#123;</div><div class="line">        include       mime.types;</div><div class="line">	include proxy.conf;</div><div class="line">	<span class="meta">#<span class="meta-keyword">include</span> luawaf.conf;</span></div><div class="line"></div><div class="line">        default_type  application/octet-stream;</div><div class="line"></div><div class="line">        server_names_hash_bucket_size <span class="number">128</span>;</div><div class="line">        client_header_buffer_size <span class="number">32</span>k;</div><div class="line">        large_client_header_buffers <span class="number">4</span> <span class="number">32</span>k;</div><div class="line">        client_max_body_size <span class="number">50</span>m;</div><div class="line"></div><div class="line">        sendfile   on;</div><div class="line">        tcp_nopush on;</div><div class="line"></div><div class="line">        keepalive_timeout <span class="number">60</span>;</div><div class="line"></div><div class="line">        tcp_nodelay on;</div><div class="line"></div><div class="line">        fastcgi_connect_timeout <span class="number">300</span>;</div><div class="line">        fastcgi_send_timeout <span class="number">300</span>;</div><div class="line">        fastcgi_read_timeout <span class="number">300</span>;</div><div class="line">        fastcgi_buffer_size <span class="number">64</span>k;</div><div class="line">        fastcgi_buffers <span class="number">4</span> <span class="number">64</span>k;</div><div class="line">        fastcgi_busy_buffers_size <span class="number">128</span>k;</div><div class="line">        fastcgi_temp_file_write_size <span class="number">256</span>k;</div><div class="line">		fastcgi_intercept_errors on;</div><div class="line"></div><div class="line">        gzip on;</div><div class="line">        gzip_min_length  <span class="number">1</span>k;</div><div class="line">        gzip_buffers     <span class="number">4</span> <span class="number">16</span>k;</div><div class="line">        gzip_http_version <span class="number">1.1</span>;</div><div class="line">        gzip_comp_level <span class="number">2</span>;</div><div class="line">        gzip_types     text/plain application/javascript application/x-javascript text/javascript text/css application/xml;</div><div class="line">        gzip_vary on;</div><div class="line">        gzip_proxied   expired no-cache no-store <span class="keyword">private</span> auth;</div><div class="line">        gzip_disable   <span class="string">"MSIE [1-6]\."</span>;</div><div class="line"></div><div class="line">        limit_conn_zone $binary_remote_addr zone=perip:<span class="number">10</span>m;</div><div class="line">		limit_conn_zone $server_name zone=perserver:<span class="number">10</span>m;</div><div class="line"></div><div class="line">        server_tokens off;</div><div class="line">        access_log off;</div><div class="line"></div><div class="line">server</div><div class="line">    &#123;</div><div class="line">        listen <span class="number">888</span>;</div><div class="line">        server_name www.bt.cn;</div><div class="line">        index index.html index.htm index.php;</div><div class="line">        root  /www/server/phpmyadmin;</div><div class="line"></div><div class="line">        #error_page   <span class="number">404</span>   /<span class="number">404.</span>html;</div><div class="line">        include enable-php.conf;</div><div class="line"></div><div class="line">        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$</div><div class="line">        &#123;</div><div class="line">            expires      <span class="number">30</span>d;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        location ~ .*\.(js|css)?$</div><div class="line">        &#123;</div><div class="line">            expires      <span class="number">12</span>h;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        location ~ /\.</div><div class="line">        &#123;</div><div class="line">            deny all;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        access_log  /www/wwwlogs/access.<span class="built_in">log</span>;</div><div class="line">    &#125;</div><div class="line">include /www/server/panel/vhost/nginx<span class="comment">/*.conf;#这句话就是找到服务器中的绝对路径,引入所有.conf格式的文件应用到nginx里面</span></div><div class="line"><span class="comment">#这样有什么好处的一个服务器就方便多个域名了,多个端口了,每个端口(域名)对应一个.conf文件</span></div><div class="line"><span class="comment">&#125;</span></div></pre></td></tr></table></figure></p>
+<p>接下来我们就要通过nginx反代理到我们的Node.js<br>怎么配置呢?</p>
+<h5 id="新建一个nginx的配置-prot3000-conf"><a href="#新建一个nginx的配置-prot3000-conf" class="headerlink" title="新建一个nginx的配置(prot3000.conf)"></a>新建一个nginx的配置(prot3000.conf)</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">include /www/server/panel/vhost/nginx/</div><div class="line"><span class="comment">// 我们找到这个文件目录,在这里新建 prot3000.conf</span></div></pre></td></tr></table></figure>
+<p>贴上prot3000.conf文件以供观赏<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">server</div><div class="line">&#123;</div><div class="line">    listen <span class="number">3000</span>;<span class="meta">#nginx监听3000端口</span></div><div class="line">    server_name nodetest;</div><div class="line">    index index.php index.html index.htm <span class="keyword">default</span>.php <span class="keyword">default</span>.htm <span class="keyword">default</span>.html;</div><div class="line">    <span class="meta">#root /www/wwwroot/www.ldd.store;</span></div><div class="line"></div><div class="line">    #SSL-START SSL相关配置，请勿删除或修改下一行带注释的<span class="number">404</span>规则</div><div class="line">    #error_page <span class="number">404</span>/<span class="number">404.</span>html;</div><div class="line">    #SSL-END</div><div class="line"></div><div class="line">    #ERROR-PAGE-START  错误页配置，可以注释、删除或修改</div><div class="line">    error_page <span class="number">404</span> /<span class="number">404.</span>html;</div><div class="line">    error_page <span class="number">502</span> /<span class="number">502.</span>html;</div><div class="line">    #ERROR-PAGE-END</div><div class="line"></div><div class="line">    #PHP-INFO-START  PHP引用配置，可以注释或修改</div><div class="line">    include enable-php<span class="number">-54.</span>conf;</div><div class="line">    #PHP-INFO-END</div><div class="line"></div><div class="line">    #REWRITE-START URL重写规则引用,修改后将导致面板设置的伪静态规则失效</div><div class="line">    include /www/server/panel/vhost/rewrite/www.ldd.store.conf;</div><div class="line">    #REWRITE-END</div><div class="line"></div><div class="line">    #这里设置反代理</div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header Host  $http_host;</div><div class="line">        proxy_set_header X-Nginx-Proxy <span class="literal">true</span>;</div><div class="line">        proxy_set_header Connection <span class="string">""</span>;</div><div class="line">        proxy_redirect <span class="keyword">default</span>;</div><div class="line">        <span class="meta">#index index.html index.htm index.php;</span></div><div class="line"></div><div class="line">        proxy_pass http:<span class="comment">//127.0.0.1:3030;#反代理到3030端口</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    #禁止访问的文件或目录</div><div class="line">    location ~ ^/(\.user.ini|\.htaccess|\.git|\.project|LICENSE|README.md)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">404</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$</div><div class="line">    &#123;</div><div class="line">        expires      <span class="number">30</span>d;</div><div class="line">        access_log off;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location ~ .*\.(js|css)?$</div><div class="line">    &#123;</div><div class="line">        expires      <span class="number">12</span>h;</div><div class="line">        access_log off;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>修改好这些配置,重启nginx,重新载入配置</p>
+<h4 id="开始node的开发"><a href="#开始node的开发" class="headerlink" title="开始node的开发"></a>开始node的开发</h4><p>在项目文件目录下新建一个test.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</div><div class="line"></div><div class="line"></div><div class="line">http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">request, response</span>) </span>&#123;</div><div class="line"></div><div class="line"> response.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>&#125;);</div><div class="line"> response.end(<span class="string">'hello world\n'</span>);</div><div class="line">&#125;).listen(<span class="number">3030</span>);</div><div class="line"></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'Server running at http://127.0.0.1:3030/'</span>);</div></pre></td></tr></table></figure></p>
+<p>执行<figure class="highlight plain"><figcaption><span>test.js```命令</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">``` </div><div class="line">[root@kangto test.js]# node get.js</div><div class="line">server List localhost:3030 #看到node启动服务,监听3030 端口</div></pre></td></tr></table></figure></p>
+<p>浏览器打开地址<code>http://服务器ip:端口</code><br><img src="http://note.youdao.com/yws/public/resource/b8da6e8e832bda9a6d32defac9b012a8/xmlnote/862777EB540A48C4926C07D2E820F2C3/1031" alt="浏览器img"></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>其实就是这么个思路 nginx 监听prot:3000 -&gt; nginx反代理node监听prot:3030 -&gt; node开始port:3030 的服务</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+            <a href="/tags/vps/" rel="tag"># vps</a>
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/31/新建一个git仓库提交本地代码/" rel="next" title="新建一个git仓库提交本地代码">
+                <i class="fa fa-chevron-left"></i> 新建一个git仓库提交本地代码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="去pi饺子" />
+            
+              <p class="site-author-name" itemprop="name">去pi饺子</p>
+              <p class="site-description motion-element" itemprop="description">十指的力量颠覆你的想象</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#在nginx下配置Node-js-Nginx站点与NodeJS站点共存的配置-为Node-js程序配置使用Nginx服务器的简明教程"><span class="nav-number">1.</span> <span class="nav-text">在nginx下配置Node.js(Nginx站点与NodeJS站点共存的配置)(为Node.js程序配置使用Nginx服务器的简明教程)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#新建一个nginx的配置-prot3000-conf"><span class="nav-number">1.1.</span> <span class="nav-text">新建一个nginx的配置(prot3000.conf)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始node的开发"><span class="nav-number">2.</span> <span class="nav-text">开始node的开发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">去pi饺子</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("gk9cYVpRHauf1D2pgTGmFMRD-gzGzoHsz", "CA00pVSVzLM75nSX0LaVxAQU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
