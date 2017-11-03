@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="在git新建一个仓库进入本地代码目录 git add .1git add . #添加本目录所有的文件到git的仓库">
+<meta name="description" content="在git新建一个仓库进入本地代码目录 git add .1git add . //添加本目录所有的文件到git的仓库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="新建一个git仓库提交本地代码">
 <meta property="og:url" content="http://yoursite.com/2017/10/31/新建一个git仓库提交本地代码/index.html">
 <meta property="og:site_name" content="欢迎来到召唤师峡谷">
-<meta property="og:description" content="在git新建一个仓库进入本地代码目录 git add .1git add . #添加本目录所有的文件到git的仓库">
+<meta property="og:description" content="在git新建一个仓库进入本地代码目录 git add .1git add . //添加本目录所有的文件到git的仓库">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-31T09:13:59.950Z">
+<meta property="og:updated_time" content="2017-11-03T09:37:30.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="新建一个git仓库提交本地代码">
-<meta name="twitter:description" content="在git新建一个仓库进入本地代码目录 git add .1git add . #添加本目录所有的文件到git的仓库">
+<meta name="twitter:description" content="在git新建一个仓库进入本地代码目录 git add .1git add . //添加本目录所有的文件到git的仓库">
 
 
 
@@ -350,11 +350,11 @@
       
 
       
-        <h4 id="在git新建一个仓库"><a href="#在git新建一个仓库" class="headerlink" title="在git新建一个仓库"></a>在git新建一个仓库</h4><h4 id="进入本地代码目录-git-add"><a href="#进入本地代码目录-git-add" class="headerlink" title="进入本地代码目录 git add ."></a>进入本地代码目录 git add .</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git add . #添加本目录所有的文件到git的仓库</div></pre></td></tr></table></figure>
+        <h4 id="在git新建一个仓库"><a href="#在git新建一个仓库" class="headerlink" title="在git新建一个仓库"></a>在git新建一个仓库</h4><h4 id="进入本地代码目录-git-add"><a href="#进入本地代码目录-git-add" class="headerlink" title="进入本地代码目录 git add ."></a>进入本地代码目录 git add .</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git add . <span class="comment">//添加本目录所有的文件到git的仓库</span></div></pre></td></tr></table></figure>
 <a id="more"></a>
-<h4 id="把文件提交到仓库"><a href="#把文件提交到仓库" class="headerlink" title="把文件提交到仓库"></a>把文件提交到仓库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git commit -m &quot;这里写提交的信息描述&quot;</div></pre></td></tr></table></figure>
-<h4 id="本地管理远程仓库"><a href="#本地管理远程仓库" class="headerlink" title="本地管理远程仓库"></a>本地管理远程仓库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote add origin git pull --rebase origin master</div></pre></td></tr></table></figure>
-<h4 id="把本地库的所有内容推送到远程库上"><a href="#把本地库的所有内容推送到远程库上" class="headerlink" title="把本地库的所有内容推送到远程库上"></a>把本地库的所有内容推送到远程库上</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
+<h4 id="把文件提交到仓库"><a href="#把文件提交到仓库" class="headerlink" title="把文件提交到仓库"></a>把文件提交到仓库</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git commit -m <span class="string">"这里写提交的信息描述"</span> <span class="comment">// 提交暂存区到仓库区</span></div></pre></td></tr></table></figure>
+<h4 id="本地管理远程仓库"><a href="#本地管理远程仓库" class="headerlink" title="本地管理远程仓库"></a>本地管理远程仓库</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote add origin 这里粘贴GitHub上的地址 <span class="comment">//添加到远程项目，别名为origin</span></div></pre></td></tr></table></figure>
+<h4 id="把本地库的所有内容推送到远程库上"><a href="#把本地库的所有内容推送到远程库上" class="headerlink" title="把本地库的所有内容推送到远程库上"></a>把本地库的所有内容推送到远程库上</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push -u origin master <span class="comment">//把本地源码库push到github 别名为origin的远程项目中，确认提交</span></div></pre></td></tr></table></figure>
 <h4 id="但是在push的时候出错了"><a href="#但是在push的时候出错了" class="headerlink" title="但是在push的时候出错了"></a>但是在push的时候出错了</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ git push -u origin master</div><div class="line">To github.com:liangdaoda/Myblog.git</div><div class="line"> ! [rejected]        master -&gt; master (fetch first)</div><div class="line">error: failed to push some refs to &apos;git@github.com:liangdaoda/Myblog.git&apos;</div><div class="line">hint: Updates were rejected because the remote contains work that you do</div><div class="line">hint: not have locally. This is usually caused by another repository pushing</div><div class="line">hint: to the same ref. You may want to first integrate the remote changes</div><div class="line">hint: (e.g., &apos;git pull ...&apos;) before pushing again.</div><div class="line">hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos; for details.</div></pre></td></tr></table></figure>
 <p>出现错误的主要原因是github中的README.md文件不在本地代码目录中<br>解决方法:可以通过如下命令进行代码合并【注：pull=fetch+merge]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git pull --rebase origin master</div></pre></td></tr></table></figure></p>
 <p>执行上面代码后可以看到本地代码库中多了README.md文件<br>此时再执行语句 git push -u origin master即可完成代码上传到github</p>
