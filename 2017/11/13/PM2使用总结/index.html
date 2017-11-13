@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="[object Object]," />
+  <meta name="keywords" content="vps,Linux,node," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="十指的力量颠覆你的想象">
-<meta name="keywords" content="[object Object]">
+<meta name="description" content="PM2介绍pm2 是一个带有负载均衡功能的Node应用的进程管理器. 当你要把你的独立代码利用全部的服务器上的所有CPU，并保证进程永远都活着，0秒的重载， PM2是完美的。 它非常适合IaaS结构，但不要把它用于PaaS方案（随后将开发Paas的解决方案）.  和使用node index.js方式比较，优点： 1 一个命令窗口就可管理多个node服务器进程。而node命令多个进程就需要开多个窗口">
+<meta name="keywords" content="vps,Linux,node">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PM2使用总结">
 <meta property="og:url" content="http://yoursite.com/2017/11/13/PM2使用总结/index.html">
 <meta property="og:site_name" content="欢迎来到召唤师峡谷">
-<meta property="og:description" content="十指的力量颠覆你的想象">
+<meta property="og:description" content="PM2介绍pm2 是一个带有负载均衡功能的Node应用的进程管理器. 当你要把你的独立代码利用全部的服务器上的所有CPU，并保证进程永远都活着，0秒的重载， PM2是完美的。 它非常适合IaaS结构，但不要把它用于PaaS方案（随后将开发Paas的解决方案）.  和使用node index.js方式比较，优点： 1 一个命令窗口就可管理多个node服务器进程。而node命令多个进程就需要开多个窗口">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-13T05:25:37.809Z">
+<meta property="og:updated_time" content="2017-11-13T05:48:13.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PM2使用总结">
-<meta name="twitter:description" content="十指的力量颠覆你的想象">
+<meta name="twitter:description" content="PM2介绍pm2 是一个带有负载均衡功能的Node应用的进程管理器. 当你要把你的独立代码利用全部的服务器上的所有CPU，并保证进程永远都活着，0秒的重载， PM2是完美的。 它非常适合IaaS结构，但不要把它用于PaaS方案（随后将开发Paas的解决方案）.  和使用node index.js方式比较，优点： 1 一个命令窗口就可管理多个node服务器进程。而node命令多个进程就需要开多个窗口">
 
 
 
@@ -351,7 +351,22 @@
       
 
       
-        
+        <h4 id="PM2介绍"><a href="#PM2介绍" class="headerlink" title="PM2介绍"></a>PM2介绍</h4><p>pm2 是一个带有负载均衡功能的Node应用的进程管理器.</p>
+<p>当你要把你的独立代码利用全部的服务器上的所有CPU，并保证进程永远都活着，0秒的重载， PM2是完美的。</p>
+<p>它非常适合IaaS结构，但不要把它用于PaaS方案（随后将开发Paas的解决方案）.</p>
+<p> 和使用node index.js方式比较，优点：</p>
+<p>1 一个命令窗口就可管理多个node服务器进程。而node命令多个进程就需要开多个窗口。</p>
+<p>2 关闭命令窗口，node进程仍然会运行。而node命令运行的关闭窗口后，进程也就关闭了。</p>
+<h4 id="PM2安装"><a href="#PM2安装" class="headerlink" title="PM2安装"></a>PM2安装</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g pm2 <span class="comment">//全局安装PM2</span></div></pre></td></tr></table></figure>
+<h4 id="PM2启动程序"><a href="#PM2启动程序" class="headerlink" title="PM2启动程序"></a>PM2启动程序</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pm2 start index.js --name AppName <span class="comment">//AppName-给应用程序起名字</span></div></pre></td></tr></table></figure>
+<h4 id="PM2其他命令"><a href="#PM2其他命令" class="headerlink" title="PM2其他命令"></a>PM2其他命令</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line">npm install -g pm2</div><div class="line"></div><div class="line">用法</div><div class="line">$ npm install pm2 -g     <span class="comment"># 命令行安装 pm2 </span></div><div class="line">$ pm2 start app.js -i <span class="number">4</span> <span class="comment">#后台运行pm2，启动4个app.js </span></div><div class="line">                                <span class="comment"># 也可以把'max' 参数传递给 start</span></div><div class="line">                                <span class="comment"># 正确的进程数目依赖于Cpu的核心数目</span></div><div class="line">$ pm2 start app.js --name my-api <span class="comment"># 命名进程</span></div><div class="line">$ pm2 list               <span class="comment"># 显示所有进程状态</span></div><div class="line">$ pm2 monit              <span class="comment"># 监视所有进程</span></div><div class="line">$ pm2 logs               <span class="comment">#  显示所有进程日志</span></div><div class="line">$ pm2 stop all           <span class="comment"># 停止所有进程</span></div><div class="line">$ pm2 restart all        <span class="comment"># 重启所有进程</span></div><div class="line">$ pm2 reload all         <span class="comment"># 0秒停机重载进程 (用于 NETWORKED 进程)</span></div><div class="line">$ pm2 stop <span class="number">0</span>             <span class="comment"># 停止指定的进程</span></div><div class="line">$ pm2 restart <span class="number">0</span>          <span class="comment"># 重启指定的进程</span></div><div class="line">$ pm2 startup            <span class="comment"># 产生 init 脚本 保持进程活着</span></div><div class="line">$ pm2 web                <span class="comment"># 运行健壮的 computer API endpoint (http://localhost:9615)</span></div><div class="line">$ pm2 delete <span class="number">0</span>           <span class="comment"># 杀死指定的进程</span></div><div class="line">$ pm2 delete all         <span class="comment"># 杀死全部进程</span></div><div class="line"></div><div class="line">运行进程的不同方式：</div><div class="line">$ pm2 start app.js -i max  <span class="comment"># 根据有效CPU数目启动最大进程数目</span></div><div class="line">$ pm2 start app.js -i <span class="number">3</span>      <span class="comment"># 启动3个进程</span></div><div class="line">$ pm2 start app.js -x        <span class="comment">#用fork模式启动 app.js 而不是使用 cluster</span></div><div class="line">$ pm2 start app.js -x -- -a <span class="number">23</span>   <span class="comment"># 用fork模式启动 app.js 并且传递参数 (-a 23)</span></div><div class="line">$ pm2 start app.js --name serverone  <span class="comment"># 启动一个进程并把它命名为 serverone</span></div><div class="line">$ pm2 stop serverone       <span class="comment"># 停止 serverone 进程</span></div><div class="line">$ pm2 start app.json        <span class="comment"># 启动进程, 在 app.json里设置选项</span></div><div class="line">$ pm2 start app.js -i max -- -a <span class="number">23</span>                   <span class="comment">#在--之后给 app.js 传递参数</span></div><div class="line">$ pm2 start app.js -i max -e err.log -o out.log  <span class="comment"># 启动 并 生成一个配置文件</span></div><div class="line">你也可以执行用其他语言编写的app  ( fork 模式):</div><div class="line">$ pm2 start my-bash-script.sh    -x --interpreter bash</div><div class="line">$ pm2 start my-python-script.py -x --interpreter python</div><div class="line"></div><div class="line"><span class="number">0</span>秒停机重载:</div><div class="line">这项功能允许你重新载入代码而不用失去请求连接。</div><div class="line">注意：</div><div class="line">仅能用于web应用</div><div class="line">运行于Node <span class="number">0.11</span>.x版本</div><div class="line">运行于 cluster 模式（默认模式）</div><div class="line">$ pm2 reload all</div><div class="line"></div><div class="line">CoffeeScript:</div><div class="line">$ pm2 start my_app.coffee  <span class="comment">#这就是全部</span></div><div class="line"></div><div class="line">PM2准备好为产品级服务了吗？</div><div class="line">只需在你的服务器上测试</div><div class="line">$ git clone https://github.com/Unitech/pm2.git</div><div class="line">$ cd pm2</div><div class="line">$ npm install  <span class="comment"># 或者 npm install --dev ，如果devDependencies 没有安装</span></div><div class="line">$ npm test</div></pre></td></tr></table></figure>
+<h4 id="自启动node-js的程序-开机自启保护进程"><a href="#自启动node-js的程序-开机自启保护进程" class="headerlink" title="自启动node.js的程序(开机自启保护进程)"></a>自启动node.js的程序(开机自启保护进程)</h4><ol>
+<li>先pm2 start运行你要开机启动的程序</li>
+<li>再pm2 save</li>
+<li>这时可以查看more ~/.pm2/dump.pm2这个文件是否已经有保存到数据</li>
+<li>最后才是pm2 startup</li>
+</ol>
+
       
     </div>
     
@@ -368,7 +383,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/object-Object/" rel="tag"># [object Object]</a>
+            <a href="/tags/vps/" rel="tag"># vps</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/node/" rel="tag"># node</a>
           
         </div>
       
@@ -441,8 +460,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -499,6 +527,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#PM2介绍"><span class="nav-number">1.</span> <span class="nav-text">PM2介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PM2安装"><span class="nav-number">2.</span> <span class="nav-text">PM2安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PM2启动程序"><span class="nav-number">3.</span> <span class="nav-text">PM2启动程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PM2其他命令"><span class="nav-number">4.</span> <span class="nav-text">PM2其他命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自启动node-js的程序-开机自启保护进程"><span class="nav-number">5.</span> <span class="nav-text">自启动node.js的程序(开机自启保护进程)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
